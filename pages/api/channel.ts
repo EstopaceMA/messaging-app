@@ -15,10 +15,10 @@ export default async function handler(
   if (req.method === "POST") {
     try {
       const channel_prisma = prisma.channel;
-      const { channel_url } = req.body as ChannelModel;
+      const { chatmate_id } = req.body as ChannelModel;
 
       const upsertedChannel = await channel_prisma.upsert({
-        where: { channel_url },
+        where: { chatmate_id },
         update: { ...req.body },
         create: { ...req.body },
       });
