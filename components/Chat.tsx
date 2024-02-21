@@ -1,17 +1,8 @@
-import {
-  sendbirdSelectors,
-  App as SendbirdApp,
-  SendBirdProvider,
-} from "@sendbird/uikit-react";
-import {
-  useGroupChannelListContext,
-  GroupChannelListProvider,
-} from "@sendbird/uikit-react/GroupChannelList/context";
-import type { User } from "@sendbird/chat";
+import { SendBirdProvider } from "@sendbird/uikit-react";
 import CustomizedApp from "./CustomizedApp";
 
-const APP_ID = "F7510382-6056-4E11-AB22-B6870B628241";
-const USER_ID = "Mark";
+const APP_ID = process.env.APP_ID as string;
+const USER_ID = process.env.USER_ID as string;
 
 const Chat = () => {
   return (
