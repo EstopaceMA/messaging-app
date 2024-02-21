@@ -2,19 +2,17 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { User } from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
 
-type UserModel = Omit<User, "id">;
+type UserModel = Omit<User, "id" | "created_at">;
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<User>
 ) {
   const prisma = new PrismaClient();
-  console.log("request: ", req.body);
   if (req.method === "POST") {
     try {
       const user_prisma = prisma.user;
-      const { user_id, profile_url, nick_name, is_deleted } =
-        req.body as UserModel;
+      const { user_id } = req.body as UserModel;
 
       const upsertedUser = await user_prisma.upsert({
         where: { user_id },
@@ -23,8 +21,8 @@ export default async function handler(
       });
 
       res.status(201).json(upsertedUser);
-    } catch (err) {
-      console.error("Error creating user:", err);
+    } catch (error) {
+      console.error("error: ", error);
     }
   } else {
     // GET
@@ -34,6 +32,7 @@ export default async function handler(
       is_deleted: false,
       nick_name: "test",
       profile_url: "",
+      created_at: null,
     });
   }
 }

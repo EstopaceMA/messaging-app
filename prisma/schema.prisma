@@ -8,9 +8,20 @@ datasource db {
 }
 
 model User {
-  id          Int     @id @default(autoincrement())
-  user_id     String  @unique
+  id          Int       @id @default(autoincrement())
+  user_id     String    @unique
   nick_name   String
   profile_url String
-  is_deleted  Boolean
+  is_deleted  Boolean?  @default(false)
+  created_at  DateTime? @default(now())
+}
+
+model Channel {
+  id             Int       @id @default(autoincrement())
+  channel_url    String    @unique
+  created_by     String
+  chatmate_id    String
+  total_messages Int?      @default(0)
+  is_deleted     Boolean?  @default(false)
+  created_at     DateTime? @default(now())
 }
